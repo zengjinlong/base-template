@@ -3,13 +3,13 @@
  * @author Jalon
  * @CreateTime 2019/07/10
  * */
-const CleanWebpackPlugin = require('clean-webpack-plugin')
+const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 const webpack = require('webpack')
 const path = require('path')
 module.exports = {
     mode: 'production',
     entry: {
-      vendor: ['vue/dist/vue.runtime.esm.js', 'vuex', 'vue-router', 'element-ui'],
+      vendor: ['vue/dist/vue.runtime.esm.js', 'vuex', 'vue-router'],
       util: ['lodash']
     },
     output: {
