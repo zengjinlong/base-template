@@ -1,14 +1,13 @@
 /**
  * 优化webpack
  * @author Jalon
- * @CreateTime 2019/07/10
+ * @CreateTime 2019/07/11
+ *
+ * @mini-css-extract-plugin:将CSS提取为独立的文件的插件，对每个包含css的js文件都会创建一个CSS文件，支持按需加载css和sourceMap
+ * @optimize-css-assets-webpack-plugin:css压缩器
  * */
 const webpack = require('webpack')
-// const HappyPack = require('happypack');
-// const os = require('os');
-// const happyThreadPool = HappyPack.ThreadPool({
-//     size: os.cpus().length
-// });
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin')
 const path = require('path')
@@ -61,37 +60,44 @@ module.exports = {
     }
   },
   configureWebpack: {
-    // module: {
-    //     rules: [{
-    //         test: /\.js$/,
-    //         //把对.js 的文件处理交给id为happyBabel 的HappyPack 的实例执行
-    //         loader: 'happypack/loader?id=happyBabel',
-    //         //排除node_modules 目录下的文件
-    //         exclude: path.resolve(__dirname, 'node_modules'),
-    //     }, ],
+    plugins: [
+    ],
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          include: path.resolve('src'),
+          use: [
+            'thread-loader',
+            'babel-loader'
+          ]
 
-    // },
-    // plugins: [
-    //     new HappyPack({
-    //         //用id来标识 happypack处理那里类文件
-    //         id: 'happyBabel',
-    //         //如何处理  用法和loader 的配置一样
-    //         loaders: [{
-    //             loader: 'babel-loader?cacheDirectory=true',
-    //         }],
-    //         //共享进程池
-    //         threadPool: happyThreadPool,
-    //     }),
-    // ],
+        }
+      ]
+    },
     // 缩小你的JavaScript 生产环境删除console.log。
     optimization: {
       minimizer: [
         new TerserPlugin({
-          // pure_funcs: ['console.log'],
           cache: true, // 开启文件缓存
           parallel: true // 开启并发 也也可以指定并发数
+        }),
+        new OptimizeCSSAssetsPlugin({ // 压缩css
+          cssProcessorOptions: {
+            safe: true
+          }
         })
-      ]
+      ],
+      splitChunks: {
+        cacheGroups: {
+          styles: {
+            name: 'styles',
+            test: /\.css$/,
+            chunks: 'all',
+            enforce: true
+          }
+        }
+      }
     }
 
   }

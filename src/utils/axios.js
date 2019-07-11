@@ -1,4 +1,5 @@
 import axios from 'axios'
+// console.log(process.env.VUE_APP_BASEURL)
 const Instance = axios.create({
   baseURL: 'https://localhost:8080/api/',
   timeout: 1000,
