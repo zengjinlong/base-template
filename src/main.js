@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
+import router from './routes/index'
 import store from './store/index'
 import 'amfe-flexible/index.js'
 import 'normalize.css'
