@@ -3,14 +3,12 @@
  * @author Jalon
  * @CreateTime 2019/07/11
  *
- * @mini-css-extract-plugin:将CSS提取为独立的文件的插件，对每个包含css的js文件都会创建一个CSS文件，支持按需加载css和sourceMap
- * @optimize-css-assets-webpack-plugin:css压缩器
  * */
 const webpack = require('webpack')
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-const TerserPlugin = require('terser-webpack-plugin')
-const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin')
 const path = require('path')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 
 const dllReference = (config) => {
   config.plugin('vendorDll')
@@ -61,6 +59,7 @@ module.exports = {
   },
   configureWebpack: {
     plugins: [
+
     ],
     module: {
       rules: [
@@ -75,7 +74,6 @@ module.exports = {
         }
       ]
     },
-    // 缩小你的JavaScript 生产环境删除console.log。
     optimization: {
       minimizer: [
         new TerserPlugin({
